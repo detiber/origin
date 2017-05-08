@@ -83,6 +83,7 @@ function image() {
 # Link or copy image binaries to the appropriate locations.
 ln_or_cp "${OS_OUTPUT_BINPATH}/linux/amd64/hello-openshift" examples/hello-openshift/bin
 ln_or_cp "${OS_OUTPUT_BINPATH}/linux/amd64/gitserver"       examples/gitserver/bin
+ln_or_cp "${OS_OUTPUT_BINPATH}/linux/amd64/hyperkube"       images/federation/bin
 
 # determine the correct tag prefix
 tag_prefix="${OS_IMAGE_PREFIX:-"openshift/origin"}"
@@ -95,6 +96,7 @@ image "${tag_prefix}-haproxy-router"        images/router/haproxy
 image "${tag_prefix}-keepalived-ipfailover" images/ipfailover/keepalived
 image "${tag_prefix}-docker-registry"       images/dockerregistry
 image "${tag_prefix}-egress-router"         images/egress/router
+image "${tag_prefix}-federation"            images/federation
 # images that depend on "${tag_prefix}
 image "${tag_prefix}-gitserver"             examples/gitserver
 image "${tag_prefix}-deployer"              images/deployer
