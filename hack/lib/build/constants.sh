@@ -34,6 +34,7 @@ readonly OS_IMAGE_COMPILE_BINARIES=("${OS_SCRATCH_IMAGE_COMPILE_TARGETS_LINUX[@]
 readonly OS_CROSS_COMPILE_TARGETS=(
   cmd/openshift
   cmd/oc
+  cmd/kubefed
 )
 readonly OS_CROSS_COMPILE_BINARIES=("${OS_CROSS_COMPILE_TARGETS[@]##*/}")
 
