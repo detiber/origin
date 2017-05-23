@@ -541,6 +541,7 @@ fi
 %license LICENSE
 %{_bindir}/oc
 %{_bindir}/kubectl
+%{_bindir}/kubefed
 %{_sysconfdir}/bash_completion.d/oc
 %{_mandir}/man1/oc*
 
