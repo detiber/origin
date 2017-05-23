@@ -669,7 +669,7 @@ readonly -f os::build::save_version_vars
 function os::build::get_product_vars() {
   export OS_BUILD_LDFLAGS_IMAGE_PREFIX="${OS_IMAGE_PREFIX:-"openshift/origin"}"
   export OS_BUILD_LDFLAGS_DEFAULT_IMAGE_STREAMS="${OS_BUILD_LDFLAGS_DEFAULT_IMAGE_STREAMS:-"centos7"}"
-  export OS_BUILD_LDFLAGS_FEDERATION_SERVER_IMAGE_NAME="${OS_BUILD_LDFLAGS_FEDERATION_SERVER_IMAGE_openshift:-"openshift/origin-federation"}"
+  export OS_BUILD_LDFLAGS_FEDERATION_SERVER_IMAGE_NAME="${OS_BUILD_LDFLAGS_IMAGE_PREFIX}-federation"
   export OS_BUILD_LDFLAGS_FEDERATION_ETCD_IMAGE="${OS_BUILD_LDFLAGS_FEDERATION_ETCD_IMAGE:-"quay.io/coreos/etcd:v3.1.7"}"
 }
 
