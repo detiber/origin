@@ -1,0 +1,8 @@
+[oranges7-test64-common-el7-build]
+name = CBS Oranges7
+baseurl = http://cbs.centos.org/kojifiles/repos/oranges7-test64-common-el7-build/latest/$basearch
+enabled = 1
+gpgcheck = 0
+sslverify = 0
+skip_if_unavailable = 1
+includepkgs = golang* protobuf*

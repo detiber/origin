@@ -13,6 +13,12 @@ if [[ "${OS_ONLY_BUILD_PLATFORMS:-}" == 'linux/amd64' ]]; then
 	# when the user is asking for only Linux binaries, we will
 	# furthermore not build cross-platform clients in tito
 	make_redistributable=0
+elif [[ "${OS_ONLY_BUILD_PLATFORMS:-}" == 'linux/ppc64le' ]]; then
+	make_redistributable=0
+elif [[ "${OS_ONLY_BUILD_PLATFORMS:-}" == 'linux/aarch64' ]]; then
+	make_redistributable=0
+elif [[ "${OS_ONLY_BUILD_PLATFORMS:-}" == 'linux/s390x' ]]; then
+	make_redistributable=0
 else
 	make_redistributable=1
 fi

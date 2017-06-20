@@ -10,6 +10,7 @@
 
 OUT_DIR = _output
 OS_OUTPUT_GOPATH ?= 1
+ARCH = $(shell arch)
 
 export GOFLAGS
 export TESTFLAGS
@@ -236,7 +237,8 @@ clean:
 	rm -rf $(OUT_DIR)
 .PHONY: clean
 
-# Build a release of OpenShift for linux/amd64 and the images that depend on it.
+# Build a release of OpenShift for for the Linux target matching the host architecture
+# and the images that depend on it
 #
 # Example:
 #   make release
@@ -270,14 +272,25 @@ install-travis:
 	hack/install-tools.sh
 .PHONY: install-travis
 
-# Build RPMs only for the Linux AMD64 target
+# Build RPMs only for the Linux target matching the host architecture
 #
 # Args:
 #
 # Example:
 #   make build-rpms
 build-rpms:
+ifeq ($(ARCH),x86_64)
 	OS_ONLY_BUILD_PLATFORMS='linux/amd64' hack/build-rpm-release.sh
+else ifeq ($(ARCH),ppc64le)
+	OS_ONLY_BUILD_PLATFORMS='linux/ppc64le' hack/build-rpm-release.sh
+else ifeq ($(ARCH),aarch64)
+	OS_ONLY_BUILD_PLATFORMS='linux/arm64' hack/build-rpm-release.sh
+else ifeq ($(ARCH),s390x)
+	OS_ONLY_BUILD_PLATFORMS='linux/s390x' hack/build-rpm-release.sh
+else
+        echo "Unrecognized architecture: ${ARCH}"
+	exit 1
+endif
 .PHONY: build-rpms
 
 # Build RPMs for all architectures
