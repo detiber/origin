@@ -15,7 +15,7 @@ if [[ "${OS_ONLY_BUILD_PLATFORMS:-}" == 'linux/amd64' ]]; then
 	make_redistributable=0
 elif [[ "${OS_ONLY_BUILD_PLATFORMS:-}" == 'linux/ppc64le' ]]; then
 	make_redistributable=0
-elif [[ "${OS_ONLY_BUILD_PLATFORMS:-}" == 'linux/aarch64' ]]; then
+elif [[ "${OS_ONLY_BUILD_PLATFORMS:-}" == 'linux/arm64' ]]; then
 	make_redistributable=0
 elif [[ "${OS_ONLY_BUILD_PLATFORMS:-}" == 'linux/s390x' ]]; then
 	make_redistributable=0
