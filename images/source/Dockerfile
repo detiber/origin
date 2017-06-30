@@ -9,5 +9,4 @@ FROM centos:7
 
 ADD origin-local-release.repo /etc/yum.repos.d/
 ADD centos-paas-sig-openshift-origin36.repo /etc/yum.repos.d/
-ADD cbs-virt-ovirt-42-el7-build.repo /etc/yum.repos.d/
 ADD cbs-oranges7-test64-common-el7-build.repo /etc/yum.repos.d/

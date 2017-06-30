@@ -5,4 +5,4 @@ enabled = 1
 gpgcheck = 0
 sslverify = 0
 skip_if_unavailable = 1
-includepkgs = golang* protobuf*
+includepkgs = golang* protobuf* openvswitch*

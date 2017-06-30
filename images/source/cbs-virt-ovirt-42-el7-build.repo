@@ -1,7 +1,0 @@
-[cbs-virt-ovirt-42-el7-build]
-name = CBS Virt OVirt 4.2
-baseurl = http://cbs.centos.org/kojifiles/repos/virt7-ovirt-42-el7-build/latest/$basearch
-enabled = 1
-gpgcheck = 0
-sslverify = 0
-includepkgs = openvswitch*
