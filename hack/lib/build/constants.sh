@@ -9,7 +9,7 @@ readonly OS_BUILD_SUPPORTED_ARCHES=(
   amd64
   arm64
   ppc64le
-  s390x
+  #s390x
 )
 
 readonly OS_OUTPUT_BASEPATH="${OS_OUTPUT_BASEPATH:-_output}"
