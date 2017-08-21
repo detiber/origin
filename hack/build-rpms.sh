@@ -20,13 +20,12 @@ os::util::ensure::system_binary_exists rpmbuild
 os::util::ensure::system_binary_exists createrepo
 os::build::setup_env
 
-if [[ "${OS_ONLY_BUILD_PLATFORMS:-}" == 'linux/amd64' ]]; then
-	# when the user is asking for only Linux binaries, we will
-	# furthermore not build cross-platform clients in tito
-	make_redistributable=0
-else
+if [[ -n "${OS_BUILD_REDISTRIBUTABLE:-}" ]]; then
 	make_redistributable=1
+else
+	make_redistributable=0
 fi
+
 if [[ -n "${OS_BUILD_SRPM-}" ]]; then
 	srpm="a"
 else
@@ -64,7 +63,7 @@ if [[ -n "${dirty}" && "${OS_GIT_TREE_STATE}" == "dirty" ]]; then
 		--define "commit ${OS_GIT_COMMIT}" \
 		--define "os_git_vars ${OS_RPM_GIT_VARS}" \
 		--define 'dist .el7' --define "_topdir ${rpm_tmp_dir}"
-	
+
 	mkdir -p "${OS_OUTPUT_RPMPATH}"
 	mv -f "${rpm_tmp_dir}"/RPMS/*/*.rpm "${OS_OUTPUT_RPMPATH}"
 

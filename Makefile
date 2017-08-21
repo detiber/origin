@@ -207,7 +207,7 @@ test-tools:
 # Example:
 #   make test-extended SUITE=core
 #   make test-extended SUITE=conformance FOCUS=pods
-# 
+#
 SUITE ?= conformance
 test-extended:
 	test/extended/$(SUITE).sh
@@ -238,7 +238,7 @@ clean:
 official-release: build-images build-cross
 .PHONY: official-release
 
-# Build a release of OpenShift for linux/amd64 and the images that depend on it.
+# Build a release of OpenShift for the host platform and the images that depend on it.
 #
 # Example:
 #   make release
@@ -261,28 +261,28 @@ install-travis:
 	hack/install-tools.sh
 .PHONY: install-travis
 
-# Build RPMs only for the Linux AMD64 target
+# Build RPMs only for the Linux target matching the host architecture
 #
 # Args:
 #
 # Example:
 #   make build-rpms
 build-rpms:
-	OS_ONLY_BUILD_PLATFORMS='linux/amd64' hack/build-rpms.sh
+	hack/build-rpms.sh
 .PHONY: build-rpms
 
-# Build RPMs for all architectures
+# Build RPMs for the Linux target matching the host architecture and redistributable RPMs
 #
 # Args:
 #
 # Example:
 #   make build-rpms-redistributable
 build-rpms-redistributable:
-	hack/build-rpms.sh
+	OS_BUILD_REDISTRIBUTABLE=true hack/build-rpms.sh
 .PHONY: build-rpms-redistributable
 
 # Build images from the official RPMs
-# 
+#
 # Args:
 #
 # Example:

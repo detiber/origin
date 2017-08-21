@@ -2,11 +2,23 @@
 
 # This script provides constants for the Golang binary build process
 
-readonly OS_GO_PACKAGE=github.com/openshift/origin
-
 readonly OS_BUILD_ENV_GOLANG="${OS_BUILD_ENV_GOLANG:-1.8}"
 readonly OS_BUILD_ENV_IMAGE="${OS_BUILD_ENV_IMAGE:-openshift/origin-release:golang-${OS_BUILD_ENV_GOLANG}}"
-readonly OS_REQUIRED_GO_VERSION=go1.8
+
+readonly OS_BUILD_SUPPORTED_SERVER_PLATFORMS=(
+  linux/amd64
+  linux/arm64
+  linux/ppc64le
+  linux/s390x
+)
+
+readonly OS_BUILD_SUPPORTED_IMAGE_PLATFORMS=( "${OS_BUILD_SUPPORTED_SERVER_PLATFORMS[@]}" )
+
+readonly OS_BUILD_SUPPORTED_CLIENT_PLATFORMS=(
+  "${OS_BUILD_SUPPORTED_SERVER_PLATFORMS[@]}"
+  darwin/amd64
+  windows/amd64
+)
 
 readonly OS_GOFLAGS_TAGS="include_gcs include_oss containers_image_openpgp"
 readonly OS_GOFLAGS_TAGS_LINUX_AMD64="gssapi"
@@ -25,6 +37,8 @@ readonly OS_OUTPUT_RPMPATH="${OS_OUTPUT_RELEASEPATH}/rpms"
 readonly OS_OUTPUT_BINPATH="${OS_OUTPUT}/bin"
 readonly OS_OUTPUT_PKGDIR="${OS_OUTPUT}/pkgdir"
 
+readonly OS_GO_PACKAGE=github.com/openshift/origin
+
 readonly OS_SDN_COMPILE_TARGETS_LINUX=(
   pkg/network/sdn-cni-plugin
   vendor/github.com/containernetworking/cni/plugins/ipam/host-local
@@ -39,13 +53,23 @@ readonly OS_SCRATCH_IMAGE_COMPILE_TARGETS_LINUX=(
 )
 readonly OS_IMAGE_COMPILE_BINARIES=("${OS_SCRATCH_IMAGE_COMPILE_TARGETS_LINUX[@]##*/}" "${OS_IMAGE_COMPILE_TARGETS_LINUX[@]##*/}")
 
-readonly OS_CROSS_COMPILE_TARGETS=(
+readonly OS_CROSS_COMPILE_SERVER_TARGETS=(
   cmd/openshift
-  cmd/oc
   cmd/kubefed
   cmd/openshift-diagnostics
   cmd/template-service-broker
   vendor/k8s.io/kubernetes/cmd/hyperkube
+)
+readonly OS_CROSS_COMPILE_SERVER_BINARIES=("${OS_CROSS_COMPILE_SERVER_TARGETS[@]##*/}")
+
+readonly OS_CROSS_COMPILE_CLIENT_TARGETS=(
+  cmd/oc
+)
+readonly OS_CROSS_COMPILE_CLIENT_BINARIES=("${OS_CROSS_COMPILE_CLIENT_TARGETS[@]##*/}")
+
+readonly OS_CROSS_COMPILE_TARGETS=(
+  "${OS_CROSS_COMPILE_SERVER_TARGETS[@]}"
+  "${OS_CROSS_COMPILE_CLIENT_TARGETS[@]}"
 )
 readonly OS_CROSS_COMPILE_BINARIES=("${OS_CROSS_COMPILE_TARGETS[@]##*/}")
 
