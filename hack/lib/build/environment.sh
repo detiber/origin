@@ -2,13 +2,20 @@
 
 # This script holds library functions for setting up the Docker container build environment
 
+function os::build::environment::image() {
+  local arch=$(os::build::goarch_to_sysarch)
+  local go_ver=${OS_BUILD_ENV_GOLANG}
+  local default_image="openshift/origin-release-${arch}:golang-${go_ver}"
+  echo "${OS_BUILD_ENV_IMAGE:-${default_image}}"
+}
+
 # os::build::environment::create creates a docker container with the default variables.
 # arguments are passed directly to the container, OS_BUILD_ENV_GOLANG, OS_BUILD_ENV_IMAGE,
 # and OS_RELEASE_DOCKER_ARGS can be used to customize the container. The docker socket
 # is mounted by default and the output of the command is the container id.
 function os::build::environment::create() {
   set -o errexit
-  local release_image="${OS_BUILD_ENV_IMAGE}"
+  local release_image="$(os::build::environment::image)"
   local additional_context="${OS_BUILD_ENV_DOCKER_ARGS:-}"
   if [[ "${OS_BUILD_ENV_USE_DOCKER:-y}" == "y" ]]; then
     additional_context+=" --privileged -v /var/run/docker.sock:/var/run/docker.sock"
@@ -187,7 +194,7 @@ function os::build::environment::withsource() {
   IFS="${oldIFS}"
   if which rsync &>/dev/null && [[ -n "${OS_BUILD_ENV_VOLUME-}" ]]; then
     os::log::debug "Syncing source using \`rsync\`"
-    if ! rsync -a --blocking-io "${excluded[@]}" --delete --omit-dir-times --numeric-ids -e "docker run --rm -i -v \"${OS_BUILD_ENV_VOLUME}:${workingdir}\" --entrypoint=/bin/bash \"${OS_BUILD_ENV_IMAGE}\" -c '\$@'" . remote:"${workingdir}"; then
+    if ! rsync -a --blocking-io "${excluded[@]}" --delete --omit-dir-times --numeric-ids -e "docker run --rm -i -v \"${OS_BUILD_ENV_VOLUME}:${workingdir}\" --entrypoint=/bin/bash \"$(os::build::environment::image)\" -c '\$@'" . remote:"${workingdir}"; then
       os::log::debug "Falling back to \`tar\` and \`docker cp\` as \`rsync\` is not in container"
       tar -cf - "${excluded[@]}" . | docker cp - "${container}:${workingdir}"
     fi
@@ -241,10 +248,10 @@ function os::build::environment::run() {
     os::build::environment::remove_volume "${tmp_volume}"
   fi
 
-  if [[ -n "${OS_BUILD_ENV_PULL_IMAGE:-}" ]]; then
-    os::log::info "Pulling the ${OS_BUILD_ENV_IMAGE} image to update it..."
-    docker pull "${OS_BUILD_ENV_IMAGE}"
-  fi
+#  if [[ -n "${OS_BUILD_ENV_PULL_IMAGE:-}" ]]; then
+#    os::log::info "Pulling the ${OS_BUILD_ENV_IMAGE} image to update it..."
+#    docker pull "${OS_BUILD_ENV_IMAGE}"
+#  fi
 
   os::log::debug "Using commit ${commit}"
   os::log::debug "Using volume ${volume}"
