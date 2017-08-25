@@ -199,7 +199,7 @@ function os::util::centos_image() {
   fi
 
   if [[ $host_arch == "arm64" ]]; then
-    echo "centos/aarch64:latest"
+    echo "centos/aarch64:7"
   elif [[ $host_arch == "ppc64le" ]]; then
     echo "ppc64le/centos:7"
   #elif [[ $host_arch == "s390x" ]]; then
