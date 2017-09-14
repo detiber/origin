@@ -5,6 +5,8 @@ trap os::test::junit::reconcile_output EXIT
 
 os::test::junit::declare_suite_start "cmd/admin/certs-validation"
 
+start_timeout="${TIMEOUT:-30}"
+
 CERT_DIR="${BASETMPDIR}/certs"
 mkdir -p -- "${CERT_DIR}"
 
