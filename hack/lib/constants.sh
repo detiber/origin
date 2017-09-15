@@ -372,7 +372,7 @@ function os::build::images() {
   }
 
   # Link or copy image binaries to the appropriate locations.
-  ln_or_cp "${OS_OUTPUT_BINPATH}/linux/amd64/hello-openshift" examples/hello-openshift/bin
+  ln_or_cp "${OS_OUTPUT_BINPATH}/$(os::build::host_platform)/hello-openshift" examples/hello-openshift/bin
 
   # determine the correct tag prefix
   tag_prefix="${OS_IMAGE_PREFIX:-"openshift/origin"}"
