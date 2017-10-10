@@ -2,7 +2,8 @@
 source "$(dirname "${BASH_SOURCE}")/lib/init.sh"
 
 platform="$(os::build::host_platform)"
-if [[ "${platform}" != "linux/amd64" ]]; then
+#if [[ "${platform}" != "linux/amd64" ]]; then
+if [[ "${platform}" != linux/* ]]; then
   os::log::warning "Completions cannot be verified on non-Linux systems (${platform})"
   exit 0
 fi
